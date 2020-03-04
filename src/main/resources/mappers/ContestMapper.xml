@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.contest.dao.ContestDao">
+<!--    Boolean insertContest(Contest contest);-->
+    <insert id="insertContest" parameterType="com.app.contest.entity.Contest">
+        insert into tb_contest(contest_name, author, contest_apply_time, contest_apply_end_time,
+        contest_address, contact_user, contact_phone, contest_start_time, contest_end_time,
+        contest_cooperation, contest_introduce, contest_reward, contest_apply_rule, contest_process,
+        contest_info, contest_thumb, publish_time)
+        values (#{contestName, jdbcType=VARCHAR}, #{author, jdbcType=VARCHAR}, #{contestApplyTime, jdbcType=TIMESTAMP},
+        #{contestApplyEndTime, jdbcType=TIMESTAMP}, #{contestAddress, jdbcType=VARCHAR}, #{contactUser, jdbcType=VARCHAR},
+        #{contactPhone, jdbcType=VARCHAR}, #{contestStartTime, jdbcType=TIMESTAMP}, #{contestEndTime, jdbcType=TIMESTAMP},
+        #{contestCooperation, jdbcType=VARCHAR}, #{contestIntroduce, jdbcType=LONGVARCHAR},
+        #{contestReward, jdbcType=LONGVARCHAR}, #{contestApplyRule, jdbcType=LONGVARCHAR},
+        #{contestProcess, jdbcType=LONGVARCHAR}, #{contestInfo, jdbcType=LONGVARCHAR}, #{contestThumb, jdbcType=VARCHAR},
+        #{publishTime, jdbcType=TIMESTAMP})
+    </insert>
+
+</mapper>
