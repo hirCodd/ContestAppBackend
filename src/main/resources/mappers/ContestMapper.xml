@@ -18,4 +18,10 @@
         #{publishTime, jdbcType=TIMESTAMP})
     </insert>
 
+<!--    List<Contest> getAllContests();-->
+
+    <select id="getAllContests" resultType="com.app.contest.entity.Contest">
+        select *
+        from tb_contest
+    </select>
 </mapper>

@@ -10,6 +10,7 @@ import com.app.contest.utils.DateUtils;
 import com.app.contest.utils.FileUploadUtils;
 import com.app.contest.utils.HttpUtils;
 import com.app.contest.utils.SpringContextUtils;
+import com.app.contest.vo.ContestVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @RestController
@@ -46,6 +49,13 @@ public class ContestController {
         contest.setPublishTime(DateUtils.getCurrentFullTime());
         Boolean flag = contestService.insertContest(contest);
         return flag ? ResultUtils.success() : ResultUtils.error();
+    }
+
+    @RequestMapping(value = "/getContest", method = { RequestMethod.GET })
+    public ResultUtils getPaginationContest(@RequestParam(defaultValue = "1") Integer pageNum,
+                                            @RequestParam(defaultValue = "10") Integer pageSize) {
+        logger.info(String.valueOf(pageNum) + String.valueOf(pageSize));
+        return ResultUtils.success(contestService.getPaginationContest(pageNum, pageSize));
     }
 
     @RequestMapping(value = "/upload", method = { RequestMethod.POST })

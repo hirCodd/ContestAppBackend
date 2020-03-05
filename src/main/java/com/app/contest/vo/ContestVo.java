@@ -1,15 +1,17 @@
-package com.app.contest.entity;
+package com.app.contest.vo;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.scheduling.annotation.Schedules;
 import org.springframework.stereotype.Component;
 
 @Component
 @Getter
 @Setter
 @ToString
-public class Contest {
+
+public class ContestVo {
     private Integer contestId;
     private String contestName;
     private String author;
@@ -26,7 +28,6 @@ public class Contest {
     private String contestApplyRule;
     private String contestProcess;
     private String contestInfo;
-    private String contestState;
     private String contestThumb;
     private String publishTime;
 }
