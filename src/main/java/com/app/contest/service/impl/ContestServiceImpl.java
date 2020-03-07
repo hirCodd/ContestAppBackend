@@ -2,6 +2,7 @@ package com.app.contest.service.impl;
 
 import com.app.contest.dao.ContestDao;
 import com.app.contest.entity.Contest;
+import com.app.contest.entity.ContestMember;
 import com.app.contest.service.ContestService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -45,5 +46,35 @@ public class ContestServiceImpl implements ContestService {
         List<Contest> contests = getAllContests();
         logger.info(contests.toString());
         return new PageInfo<>(contests);
+    }
+
+    @Override
+    public Contest getContestById(Integer contestId) {
+        try {
+            return contestDao.getContestContent(contestId);
+        } catch (Exception e) {
+            logger.error(e.getCause().toString());
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean insertContestMember(List<ContestMember> contestMembers) {
+        try {
+            return contestDao.insertContestMembers(contestMembers);
+        } catch (Exception e) {
+            logger.error(e.getCause().toString());
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean queryApplyResult(Integer contestId, String openId) {
+        try {
+            return contestDao.queryApplyResultByContestIdAndOpenId(contestId, openId);
+        } catch (Exception e) {
+            logger.error(e.getCause().toString());
+        }
+        return false;
     }
 }

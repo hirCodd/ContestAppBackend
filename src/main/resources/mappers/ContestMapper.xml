@@ -19,9 +19,45 @@
     </insert>
 
 <!--    List<Contest> getAllContests();-->
-
     <select id="getAllContests" resultType="com.app.contest.entity.Contest">
         select *
         from tb_contest
     </select>
+
+<!--    Contest getContestContent(Integer contestId);-->
+    <select id="getContestContent" resultType="com.app.contest.entity.Contest">
+        select *
+        from tb_contest
+        where contest_id = #{contestId, jdbcType=INTEGER}
+    </select>
+
+<!--    Boolean queryApplyResultByContestIdAndOpenId(Integer contestId, String openId);-->
+    <select id="queryApplyResultByContestIdAndOpenId" resultType="java.lang.Boolean">
+        select apply_result
+        from tb_team_members
+        where contest_id = #{contestId, jdbcType=INTEGER}
+        and open_id = #{openId, jdbcType=VARCHAR}
+    </select>
+
+<!--    Boolean insertContestMembers(List<ContestMember> contestMemberList);-->
+    <insert id="insertContestMembers" parameterType="java.util.List">
+        insert into tb_team_members(contest_id, team_id, open_id, member_name, member_phone,
+        contest_area, member_player_id, member_player_level, contest_other_info, is_team, apply_result)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.contestId, jdbcType=INTEGER},
+            #{item.teamId, jdbcType=INTEGER},
+            #{item.openId, jdbcType=VARCHAR},
+            #{item.memberName, jdbcType=VARCHAR},
+            #{item.memberPhone, jdbcType=VARCHAR},
+            #{item.contestArea, jdbcType=VARCHAR},
+            #{item.memberPlayerId, jdbcType=VARCHAR},
+            #{item.memberPlayLevel, jdbcType=VARCHAR},
+            #{item.contestOtherInfo, jdbcType=VARCHAR},
+            #{item.isTeam, jdbcType=BOOLEAN},
+            #{item.applyResult, jdbcType=BOOLEAN}
+            )
+        </foreach>
+    </insert>
 </mapper>
