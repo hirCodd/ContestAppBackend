@@ -18,6 +18,30 @@
         #{publishTime, jdbcType=TIMESTAMP})
     </insert>
 
+<!--    Boolean updateContest(Contest contest);-->
+    <update id="updateContest" parameterType="com.app.contest.entity.Contest">
+        update tb_contest
+        <set>
+            <if test="contestName !=null">contest_name = #{contestName, jdbcType=VARCHAR},</if>
+            <if test="author != null">author = #{author, jdbcType=VARCHAR},</if>
+            <if test="contestApplyTime != null">contest_apply_time = #{contestApplyTime, jdbcType=TIMESTAMP},</if>
+            <if test="contestApplyEndTime != null">contest_apply_end_time = #{contestApplyEndTime, jdbcType=TIMESTAMP},</if>
+            <if test="contestAddress != null">contest_address = #{contestAddress, jdbcType=VARCHAR},</if>
+            <if test="contactUser != null">contact_user = #{contactUser, jdbcType=VARCHAR},</if>
+            <if test="contactPhone != null">contact_phone = #{contactPhone, jdbcType=VARCHAR},</if>
+            <if test="contestStartTime != null">contest_start_time = #{contestStartTime, jdbcType=TIMESTAMP},</if>
+            <if test="contestEndTime != null">contest_end_time = #{contestEndTime, jdbcType=TIMESTAMP},</if>
+            <if test="contestCooperation != null">contest_cooperation = #{contestCooperation, jdbcType=VARCHAR},</if>
+            <if test="contestIntroduce != null">contest_introduce = #{contestIntroduce, jdbcType=LONGVARCHAR},</if>
+            <if test="contestReward != null">contest_reward = #{contestReward, jdbcType=LONGVARCHAR},</if>
+            <if test="contestApplyRule != null">contest_apply_rule = #{contestApplyRule, jdbcType=LONGVARCHAR},</if>
+            <if test="contestProcess != null">contest_process = #{contestProcess, jdbcType=LONGVARCHAR},</if>
+            <if test="contestInfo != null">contest_info = #{contestInfo, jdbcType=LONGVARCHAR},</if>
+        </set>
+        where contest_id = #{contestId, jdbcType=INTEGER}
+
+    </update>
+
 <!--    List<Contest> getAllContests();-->
     <select id="getAllContests" resultType="com.app.contest.entity.Contest">
         select *
@@ -38,6 +62,27 @@
         where contest_id = #{contestId, jdbcType=INTEGER}
         and open_id = #{openId, jdbcType=VARCHAR}
     </select>
+
+<!--    Integer queryTeamInfoResult(Integer contestId, String openId);-->
+    <select id="queryTeamInfoResult" resultType="java.lang.Integer">
+        select team_id
+        from tb_team
+        where contest_id = #{contestId, jdbcType=INTEGER}
+          and open_id = #{openId, jdbcType=VARCHAR}
+    </select>
+
+<!--    List<String> queryTeamNames(Integer contestId);-->
+    <select id="queryTeamNames" resultType="java.util.List">
+        select team_name
+        from tb_team
+        where contest_id = #{contestId, jdbcType=INTEGER}
+    </select>
+
+<!--    Integer insertTeamInfo(TeamInfo teamInfo);-->
+    <insert id="insertTeamInfo" useGeneratedKeys="true">
+        insert into tb_team(team_name, open_id, contest_id)
+        values (#{teamName, jdbcType=VARCHAR}, #{openId, jdbcType=VARCHAR}, #{contestId, jdbcType=INTEGER})
+    </insert>
 
 <!--    Boolean insertContestMembers(List<ContestMember> contestMemberList);-->
     <insert id="insertContestMembers" parameterType="java.util.List">
@@ -60,4 +105,21 @@
             )
         </foreach>
     </insert>
+
+<!--    List<Contest> queryMyContestApply(String openId);-->
+    <select id="queryMyContestApply" resultType="com.app.contest.entity.Contest">
+        select contest_name, author, contest_apply_time, contest_apply_end_time,
+               contest_address, contact_user, contact_phone, contest_start_time, contest_end_time,
+               contest_cooperation, contest_introduce, contest_reward, contest_apply_rule, contest_process,
+               contest_info, contest_thumb, publish_time
+        from tb_contest, tb_team_members
+        where tb_contest.contest_id = tb_team_members.contest_id
+          and tb_team_members.open_id = #{oepnId, jdbcType=VARCHAR}
+    </select>
+<!--    List<Contest> getContestByKeyword(String keyword);-->
+    <select id="getContestByKeyword" resultType="com.app.contest.entity.Contest">
+        select *
+        from tb_contest
+        where contest_name like "%"#{keyword, jdbcType=VARCHAR}"%"
+    </select>
 </mapper>

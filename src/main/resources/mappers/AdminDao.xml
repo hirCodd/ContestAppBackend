@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.contest.dao.AdminDao">
+<!--    Admin login(String loginName);-->
+    <select id="login" parameterType="java.lang.String" resultType="com.app.contest.entity.Admin">
+        select *
+        from tb_admin
+        where login_name = #{loginName, jdbcType=VARCHAR}
+    </select>
+</mapper>

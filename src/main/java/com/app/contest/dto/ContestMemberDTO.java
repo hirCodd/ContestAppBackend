@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class ContestMemberDTO implements Serializable {
     private Integer contestId;
     private String openId;
+    private Integer teamId;
     private String memberName;
     private String memberPhone;
     private String contestArea;

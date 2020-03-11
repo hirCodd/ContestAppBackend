@@ -3,8 +3,10 @@ package com.app.contest.controller;
 import com.app.contest.dto.ContestDTO;
 import com.app.contest.dto.ContestMemberDTO;
 import com.app.contest.dto.DelFileDTO;
+import com.app.contest.dto.TeamRequestDTO;
 import com.app.contest.entity.Contest;
 import com.app.contest.entity.ContestMember;
+import com.app.contest.entity.TeamInfo;
 import com.app.contest.response.Result;
 import com.app.contest.response.ResultUtils;
 import com.app.contest.service.ContestService;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.util.List;
 
 
@@ -48,6 +49,14 @@ public class ContestController {
         return flag ? ResultUtils.success() : ResultUtils.error();
     }
 
+    @RequestMapping(value = "/updateContest", method = { RequestMethod.POST })
+    public ResultUtils updateContest(@RequestBody ContestDTO contestDTO) {
+        Contest contest = new Contest();
+        BeanUtils.copyProperties(contestDTO, contest);
+        Boolean update = contestService.updateContest(contest);
+        return update ? ResultUtils.success() : ResultUtils.error();
+    }
+
     @RequestMapping(value = "/getContest", method = { RequestMethod.GET })
     public ResultUtils getPaginationContest(@RequestParam(defaultValue = "1") Integer pageNum,
                                             @RequestParam(defaultValue = "10") Integer pageSize) {
@@ -70,11 +79,47 @@ public class ContestController {
         }
     }
 
+    @RequestMapping(value = "/queryTeamInfo", method = { RequestMethod.GET } )
+    public ResultUtils queryTeamInfoResult(@RequestParam @NotNull Integer contestId,
+                                        @RequestParam @NotNull String openId) {
+        Integer teamId = contestService.queryTeamInfoResult(contestId, openId);
+        if (teamId != null) {
+            return ResultUtils.success(teamId);
+        } else {
+            return ResultUtils.error();
+        }
+    }
+
+    @RequestMapping(value = "/queryTeamNames", method = { RequestMethod.GET } )
+    public ResultUtils queryTeamNames(@RequestParam @NotNull Integer contestId) {
+        List<String> nameList = contestService.queryTeamNameList(contestId);
+        return nameList != null ? ResultUtils.success(nameList) : ResultUtils.error();
+    }
+
+    @RequestMapping(value = "/insertTeam", method = { RequestMethod.POST })
+    public ResultUtils insertTeamInfo(@RequestBody TeamRequestDTO teamRequestDTO) {
+        TeamInfo teamInfo = new TeamInfo();
+        BeanUtils.copyProperties(teamRequestDTO, teamInfo);
+        Integer flag = contestService.insertTeamInfo(teamInfo);
+        return flag != -1 ? ResultUtils.success(flag) : ResultUtils.error();
+    }
+
     @RequestMapping(value = "/addMembers", method = { RequestMethod.POST })
     public ResultUtils insertContestMembers(@RequestBody List<ContestMemberDTO> contestMembers) {
         List<ContestMember> contestMembersList = ListUtils.listCopyProperties(ContestMember.class, contestMembers);
         Boolean flag = contestService.insertContestMember(contestMembersList);
         return flag ? ResultUtils.success() : ResultUtils.error();
+    }
+
+    @RequestMapping(value = "/queryMyContestApply", method = { RequestMethod.GET })
+    public ResultUtils queryMyApply(@RequestParam String openId) {
+        List<Contest> myApplyContest = contestService.queryMyContestApply(openId);
+        return myApplyContest != null ? ResultUtils.success(myApplyContest) : ResultUtils.error();
+    }
+
+    @RequestMapping(value = "/search", method = { RequestMethod.POST, RequestMethod.GET })
+    public ResultUtils searchContest(@NotNull @RequestParam String keyword) {
+        return ResultUtils.success(contestService.getContestByKeyword(keyword));
     }
 
     @RequestMapping(value = "/upload", method = { RequestMethod.POST })

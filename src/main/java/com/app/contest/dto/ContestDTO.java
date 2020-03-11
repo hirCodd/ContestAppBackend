@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ContestDTO {
+    private Integer contestId;
     private String contestName;
     private String author;
     private String contestApplyTime;

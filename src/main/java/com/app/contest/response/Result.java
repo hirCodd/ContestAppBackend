@@ -3,7 +3,9 @@ package com.app.contest.response;
 public enum Result {
     SUCCESS(0, "success"),
     ERROR(-1, "failed"),
-    UPLOAD_FAILED(400, "upload failed");
+    UPLOAD_FAILED(400, "upload failed"),
+    LOGIN_SUCCESS(200, "login successfully"),
+    LOGIN_FAILED(500, "login failed");
     private final int code;
     private final String msg;
 
