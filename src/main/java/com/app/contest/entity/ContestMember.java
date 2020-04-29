@@ -18,7 +18,7 @@ public class ContestMember implements Serializable {
     private String memberPhone;
     private String contestArea;
     private String memberPlayerId;
-    private String memberPlayLevel;
+    private String memberPlayerLevel;
     private String contestOtherInfo;
     private Boolean isTeam;
     private Boolean applyResult;

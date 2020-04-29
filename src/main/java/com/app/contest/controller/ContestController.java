@@ -1,5 +1,6 @@
 package com.app.contest.controller;
 
+import com.app.contest.dao.ContestDao;
 import com.app.contest.dto.ContestDTO;
 import com.app.contest.dto.ContestMemberDTO;
 import com.app.contest.dto.DelFileDTO;
@@ -7,6 +8,7 @@ import com.app.contest.dto.TeamRequestDTO;
 import com.app.contest.entity.Contest;
 import com.app.contest.entity.ContestMember;
 import com.app.contest.entity.TeamInfo;
+import com.app.contest.handler.ContestMatchThread;
 import com.app.contest.response.Result;
 import com.app.contest.response.ResultUtils;
 import com.app.contest.service.ContestService;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -40,6 +42,17 @@ public class ContestController {
     @Autowired
     ContestService contestService;
 
+    @Autowired
+    ContestDao contestDao;
+
+    @Autowired
+    ContestMatchThread contestMatchThread;
+
+    /**
+     * 发布比赛
+     * @param contestDTO
+     * @return
+     */
     @RequestMapping(value = "/publish", method = { RequestMethod.POST })
     public ResultUtils publishContest(@RequestBody ContestDTO contestDTO) {
         Contest contest = new Contest();
@@ -49,6 +62,11 @@ public class ContestController {
         return flag ? ResultUtils.success() : ResultUtils.error();
     }
 
+    /**
+     * 更新比赛
+     * @param contestDTO
+     * @return
+     */
     @RequestMapping(value = "/updateContest", method = { RequestMethod.POST })
     public ResultUtils updateContest(@RequestBody ContestDTO contestDTO) {
         Contest contest = new Contest();
@@ -79,6 +97,12 @@ public class ContestController {
         }
     }
 
+    /**
+     * 查询队伍信息
+     * @param contestId
+     * @param openId
+     * @return
+     */
     @RequestMapping(value = "/queryTeamInfo", method = { RequestMethod.GET } )
     public ResultUtils queryTeamInfoResult(@RequestParam @NotNull Integer contestId,
                                         @RequestParam @NotNull String openId) {
@@ -96,6 +120,11 @@ public class ContestController {
         return nameList != null ? ResultUtils.success(nameList) : ResultUtils.error();
     }
 
+    /**
+     * 添加队伍
+     * @param teamRequestDTO
+     * @return
+     */
     @RequestMapping(value = "/insertTeam", method = { RequestMethod.POST })
     public ResultUtils insertTeamInfo(@RequestBody TeamRequestDTO teamRequestDTO) {
         TeamInfo teamInfo = new TeamInfo();
@@ -104,6 +133,11 @@ public class ContestController {
         return flag != -1 ? ResultUtils.success(flag) : ResultUtils.error();
     }
 
+    /**
+     * 添加队伍成员
+     * @param contestMembers
+     * @return
+     */
     @RequestMapping(value = "/addMembers", method = { RequestMethod.POST })
     public ResultUtils insertContestMembers(@RequestBody List<ContestMemberDTO> contestMembers) {
         List<ContestMember> contestMembersList = ListUtils.listCopyProperties(ContestMember.class, contestMembers);
@@ -111,15 +145,44 @@ public class ContestController {
         return flag ? ResultUtils.success() : ResultUtils.error();
     }
 
+    /**
+     * 查询我的比赛申请
+     * @param openId
+     * @return
+     */
     @RequestMapping(value = "/queryMyContestApply", method = { RequestMethod.GET })
     public ResultUtils queryMyApply(@RequestParam String openId) {
         List<Contest> myApplyContest = contestService.queryMyContestApply(openId);
         return myApplyContest != null ? ResultUtils.success(myApplyContest) : ResultUtils.error();
     }
 
+    /**
+     * 比赛查询
+     * @param keyword
+     * @return
+     */
     @RequestMapping(value = "/search", method = { RequestMethod.POST, RequestMethod.GET })
     public ResultUtils searchContest(@NotNull @RequestParam String keyword) {
         return ResultUtils.success(contestService.getContestByKeyword(keyword));
+    }
+
+    /**
+     * 根据比赛id将所有队伍人员挑选出来
+     * @param contestId
+     * @return
+     */
+    @RequestMapping(value = "/match", method = { RequestMethod.POST, RequestMethod.GET })
+    public ResultUtils matchContest(@RequestParam Integer contestId) {
+        logger.info("contestId: {}", contestId);
+        Set<ContestMember> memberHashSet = contestDao.queryMemberByContestId(contestId);
+        logger.info("ssss: {}", memberHashSet);
+        HashMap<Integer, ContestMember> contestMemberMap = new HashMap<>();
+        memberHashSet.forEach(contestMember -> {
+            contestMemberMap.put(contestMember.getMemberId(), contestMember);
+        });
+        // 所有内容由排队线程处理
+        contestMatchThread.addContestMember(contestMemberMap);
+        return ResultUtils.success(contestMemberMap);
     }
 
     @RequestMapping(value = "/upload", method = { RequestMethod.POST })

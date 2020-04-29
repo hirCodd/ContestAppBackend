@@ -98,7 +98,7 @@
             #{item.memberPhone, jdbcType=VARCHAR},
             #{item.contestArea, jdbcType=VARCHAR},
             #{item.memberPlayerId, jdbcType=VARCHAR},
-            #{item.memberPlayLevel, jdbcType=VARCHAR},
+            #{item.memberPlayerLevel, jdbcType=VARCHAR},
             #{item.contestOtherInfo, jdbcType=VARCHAR},
             #{item.isTeam, jdbcType=BOOLEAN},
             #{item.applyResult, jdbcType=BOOLEAN}
@@ -121,5 +121,12 @@
         select *
         from tb_contest
         where contest_name like "%"#{keyword, jdbcType=VARCHAR}"%"
+    </select>
+
+    <!--List<ContestMember> queryMemberByContestId(Integer contestId);-->
+    <select id="queryMemberByContestId" resultType="com.app.contest.entity.ContestMember">
+        select *
+        from tb_team_members
+        where contest_id = #{contestId, jdbcType=INTEGER}
     </select>
 </mapper>

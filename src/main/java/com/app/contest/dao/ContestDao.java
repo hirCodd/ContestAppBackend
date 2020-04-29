@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 @Component
@@ -37,6 +38,8 @@ public interface ContestDao {
      * @return 文章列表
      */
     List<Contest> getContestByKeyword(String keyword);
+
+    Set<ContestMember> queryMemberByContestId(Integer contestId);
 
 
 }
