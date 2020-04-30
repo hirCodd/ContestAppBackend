@@ -175,14 +175,17 @@ public class ContestController {
     public ResultUtils matchContest(@RequestParam Integer contestId) {
         logger.info("contestId: {}", contestId);
         Set<ContestMember> memberHashSet = contestDao.queryMemberByContestId(contestId);
-        logger.info("ssss: {}", memberHashSet);
-        HashMap<Integer, ContestMember> contestMemberMap = new HashMap<>();
-        memberHashSet.forEach(contestMember -> {
-            contestMemberMap.put(contestMember.getMemberId(), contestMember);
-        });
-        // 所有内容由排队线程处理
-        contestMatchThread.addContestMember(contestMemberMap);
-        return ResultUtils.success(contestMemberMap);
+        List<ContestMember> contestMembers = new ArrayList<>(memberHashSet);
+//        memberHashSet.forEach(contestMember -> {
+//
+//            contestMembers.add(contestMember);
+////            contestMemberMap.put(contestMember.getMemberId(), contestMember);
+//        });
+//        // 所有内容由排队线程处理
+//        Map<Integer, HashMap<Integer, ContestMember>> contestPoolElement = new HashMap<>();
+//        contestPoolElement.put(contestId, contestMemberMap);
+        contestMatchThread.addContestMember(contestMembers);
+        return ResultUtils.success(contestMembers);
     }
 
     @RequestMapping(value = "/upload", method = { RequestMethod.POST })

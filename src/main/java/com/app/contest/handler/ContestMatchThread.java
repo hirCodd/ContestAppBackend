@@ -6,32 +6,66 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Stream;
 
 @Component
 public class ContestMatchThread implements Runnable {
     private Logger LOGGER = LoggerFactory.getLogger(Logger.class);
 
     private volatile boolean isDone = false;
-    private ConcurrentHashMap<Integer, ContestMember> matchPool = new ConcurrentHashMap<>();
+    private BlockingQueue<List<ContestMember>> matchPool = new LinkedBlockingQueue<>();
 
     @Override
     public void run() {
-        synchronized (this) {
-            while (!isDone) {
+        while (true) {
+            try {
+                if (!matchPool.isEmpty()) {
+                    Thread.sleep(3000);
+                    LOGGER.info("match pool:" + matchPool.toString());
+                    List<ContestMember> newContestMembers = matchPool.take();
+                    LOGGER.info("match pool:" + newContestMembers.size());
+                    LOGGER.info("match pool:" + newContestMembers.toString());
+                    LOGGER.info("match pool:" + newContestMembers.isEmpty());
+                    LOGGER.info("match pool:" + matchPool.toString());
+                    if (!newContestMembers.isEmpty()) {
+                        for (int i = 0;  i < newContestMembers.size(); i++ ) {
+                            if (newContestMembers.get(i).getIsTeam()) {
+                                LOGGER.info(newContestMembers.get(i).getIsTeam().toString());
+                                newContestMembers.remove(i);
+                            }
+                        }
 
+                        LOGGER.info("match poolsssss:" + newContestMembers.isEmpty());
+
+                        LOGGER.info("test:" + newContestMembers.toString());
+                    }
+                }
+            } catch (Exception e) {
+                LOGGER.error(e.getCause().toString());
             }
-        }
 
+        }
+    }
+
+    private void processMatchPool() {
 
     }
 
-    public void addContestMember(HashMap<Integer, ContestMember> contestMemberMap) {
-        LOGGER.info(contestMemberMap.toString());
+    public void addContestMember(List<ContestMember> contestPoolElement) {
+        try {
+            matchPool.put(contestPoolElement);
 
-        synchronized (this) {
-            matchPool.putAll(contestMemberMap);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+//        synchronized (this) {
+//
+//        }
     }
 
     public void removeContestMember(Integer id) {
