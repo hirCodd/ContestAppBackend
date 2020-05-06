@@ -11,4 +11,13 @@ public class TeamInfo {
     private String openId;
     private String teamName;
     private Integer contestId;
+
+    public TeamInfo() {
+    }
+
+    public TeamInfo(String openId, String teamName, Integer contestId) {
+        this.openId = openId;
+        this.teamName = teamName;
+        this.contestId = contestId;
+    }
 }

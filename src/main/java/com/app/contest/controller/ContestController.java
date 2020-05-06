@@ -175,7 +175,7 @@ public class ContestController {
     public ResultUtils matchContest(@RequestParam Integer contestId) {
         logger.info("contestId: {}", contestId);
         Set<ContestMember> memberHashSet = contestDao.queryMemberByContestId(contestId);
-        List<ContestMember> contestMembers = new ArrayList<>(memberHashSet);
+        List<ContestMember> contestMembers = new LinkedList<>(memberHashSet);
 //        memberHashSet.forEach(contestMember -> {
 //
 //            contestMembers.add(contestMember);

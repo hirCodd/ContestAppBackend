@@ -39,7 +39,10 @@ public interface ContestDao {
      */
     List<Contest> getContestByKeyword(String keyword);
 
+    /**
+     * 查询所有比赛成员信息
+     * @param contestId
+     * @return
+     */
     Set<ContestMember> queryMemberByContestId(Integer contestId);
-
-
 }
