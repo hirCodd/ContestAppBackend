@@ -44,57 +44,66 @@ public class ContestMatchThread implements Runnable {
                             }
                         }
                         Integer contestId = newContestMembers.get(1).getContestId();
-                        processMatchPool(contestMemberList, contestId);
-//                        LOGGER.info("====================");
-//                        LOGGER.info(String.valueOf(contestMemberList));
-//                        LOGGER.info(String.valueOf(contestMemberList.size()));
-//                        LOGGER.info(String.valueOf(memberResult));
-//                        LOGGER.info(String.valueOf(memberResult.size()));
-//                        LOGGER.info(TeamIdUtils.generateTeamId());
-
-//                        for (int i = 0;  i < newContestMembers.size(); i++ ) {
-//                            LOGGER.info(newContestMembers.get(i).getIsTeam().toString());
-//                            if (newContestMembers.get(i).getIsTeam() && newContestMembers.get(i).getTeamId() != null) {
-//
-//                                newContestMembers.remove(i);
-//                            }
-//                        }
-
-//                        LOGGER.info("match poolsssss:" + newContestMembers.isEmpty());
-//
-//                        LOGGER.info("test:" + newContestMembers.toString());
+                        List<ContestMember> lists = processMatchPool(contestMemberList, contestId);
+                        LOGGER.info(lists.toString());
+                        memberResult.addAll(lists);
+                        LOGGER.info("contestId:{} - member sum: {} - members: {}", contestId, memberResult.size(), memberResult);
+                        // 批量插入数据
+                        contestDao.insertIntoMemberResult(memberResult);
+                        // 删除原有数据
+                        contestDao.deleteOriginData(memberResult);
                     }
                 }
             } catch (Exception e) {
                 LOGGER.error(e.toString());
             }
-
         }
     }
 
-    private List processMatchPool(List<ContestMember> matchList, Integer contestId) {
-        List<List<ContestMember>> lists = new ArrayList<>();
+    private List<ContestMember> processMatchPool(List<ContestMember> matchList, Integer contestId) {
+        List<List<ContestMember>> lists = new ArrayList<List<ContestMember>>();
         Random random = new Random();
         while (!matchList.isEmpty()) {
             LOGGER.info("-----------------:" + matchList.size());
             List<ContestMember> temp = new ArrayList<>();
             TeamInfo teamInfo;
             teamInfo = new TeamInfo(TeamIdUtils.generateTeamId(), TeamIdUtils.generateTeamId(), contestId);
-            Integer teamId = contestDao.insertTeamInfo(teamInfo);
-            LOGGER.info("----------++++:" + teamId);
+            int teamId = contestDao.insertTeamInfo(teamInfo);
+
+            LOGGER.info("new teamId is:" + teamInfo.getTeamId());
             for (int i = 0; i < 5; i++) {
                 if (matchList.size() > 0) {
                     int n = random.nextInt(matchList.size());
                     ContestMember contestMember = matchList.get(n);
-                    contestMember.setTeamId(teamId);
+                    contestMember.setTeamId(teamInfo.getTeamId());
                     temp.add(contestMember);
                     matchList.remove(matchList.get(n));
                 }
             }
-            LOGGER.info("----------++++:" + temp.toString());
+            LOGGER.info("current team is:" + temp.toString());
             lists.add(temp);
         }
-        return lists;
+        return converterList(lists);
+    }
+
+    /**
+     * 处理嵌套list
+     * @param source
+     * @param <T>
+     * @param <S>
+     * @return
+     */
+    private <T> List<T> converterList(List<List<T>> source) {
+        List<T> result = new ArrayList<>();
+        Iterator<List<T>> iterator = source.iterator();
+        while (iterator.hasNext()) {
+            Iterator<T> itt = iterator.next().iterator();
+            while (itt.hasNext()) {
+                T t = itt.next();
+                result.add(t);
+            }
+        }
+        return result;
     }
 
     public void addContestMember(List<ContestMember> contestPoolElement) {

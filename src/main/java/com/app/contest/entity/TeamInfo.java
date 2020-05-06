@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class TeamInfo {
+    private Integer teamId;
     private String openId;
     private String teamName;
     private Integer contestId;

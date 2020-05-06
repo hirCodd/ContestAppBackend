@@ -45,4 +45,25 @@ public interface ContestDao {
      * @return
      */
     Set<ContestMember> queryMemberByContestId(Integer contestId);
+
+    /**
+     * 插入所有排序完成的队伍
+     * @param members
+     * @return
+     */
+    Boolean insertIntoMemberResult(List<ContestMember> members);
+
+    /**
+     * 删除原有数据
+     * @param delMembers
+     * @return
+     */
+    Boolean deleteOriginData(List<ContestMember> delMembers);
+
+    /**
+     * 查询当前比赛的所有队员
+     * @param contestId
+     * @return
+     */
+    List<ContestMember> queryCurrentContestMember(Integer contestId);
 }

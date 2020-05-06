@@ -79,7 +79,7 @@
     </select>
 
 <!--    Integer insertTeamInfo(TeamInfo teamInfo);-->
-    <insert id="insertTeamInfo" useGeneratedKeys="true">
+    <insert id="insertTeamInfo" parameterType="com.app.contest.entity.TeamInfo" useGeneratedKeys="true" keyProperty="teamId">
         insert into tb_team(team_name, open_id, contest_id)
         values (#{teamName, jdbcType=VARCHAR}, #{openId, jdbcType=VARCHAR}, #{contestId, jdbcType=INTEGER})
     </insert>
@@ -127,6 +127,44 @@
     <select id="queryMemberByContestId" resultType="com.app.contest.entity.ContestMember">
         select *
         from tb_team_members
+        where contest_id = #{contestId, jdbcType=INTEGER}
+    </select>
+
+<!--    Boolean insertIntoMemberResult(List<ContestMember> members);-->
+    <insert id="insertIntoMemberResult" parameterType="java.util.List">
+        insert into tb_team_members_result(member_id, contest_id, team_id, open_id, member_name, member_phone,
+        contest_area, member_player_id, member_player_level, contest_other_info, is_team, apply_result)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.memberId, jdbcType=INTEGER},
+            #{item.contestId, jdbcType=INTEGER},
+            #{item.teamId, jdbcType=INTEGER},
+            #{item.openId, jdbcType=VARCHAR},
+            #{item.memberName, jdbcType=VARCHAR},
+            #{item.memberPhone, jdbcType=VARCHAR},
+            #{item.contestArea, jdbcType=VARCHAR},
+            #{item.memberPlayerId, jdbcType=VARCHAR},
+            #{item.memberPlayerLevel, jdbcType=VARCHAR},
+            #{item.contestOtherInfo, jdbcType=VARCHAR},
+            #{item.isTeam, jdbcType=BOOLEAN},
+            #{item.applyResult, jdbcType=BOOLEAN}
+            )
+        </foreach>
+    </insert>
+<!--    Boolean deleteOriginData(List<ContestMember> delMembers);-->
+    <delete id="deleteOriginData" parameterType="java.util.List">
+        delete
+        from tb_team_members
+        where member_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item.memberId}
+        </foreach>
+    </delete>
+<!--    List<ContestMember> queryCurrentContestMember(Integer contestId);-->
+    <select id="queryCurrentContestMember" resultType="com.app.contest.entity.ContestMember">
+        select *
+        from tb_team_members_result
         where contest_id = #{contestId, jdbcType=INTEGER}
     </select>
 </mapper>
