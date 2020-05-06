@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2020-04-30 00:48:12
+Date: 2020-05-06 23:42:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,8 +23,8 @@ CREATE TABLE `tb_about` (
   `id` int(11) NOT NULL,
   `about_content` longtext COLLATE utf8mb4_unicode_ci,
   `insert_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_about
@@ -40,8 +40,8 @@ CREATE TABLE `tb_admin` (
   `login_name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_admin
@@ -73,8 +73,8 @@ CREATE TABLE `tb_contest` (
   `publish_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `insert_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`contest_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`contest_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_contest
@@ -90,8 +90,8 @@ CREATE TABLE `tb_copyright` (
   `id` int(11) NOT NULL,
   `copyright_content` longtext COLLATE utf8mb4_unicode_ci,
   `insert_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_copyright
@@ -103,26 +103,68 @@ INSERT INTO `tb_copyright` VALUES ('1', 'fasfsafdsafdsafdsafasfd', null);
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_team`;
 CREATE TABLE `tb_team` (
-  `team_id` int(11) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `team_id` int(32) unsigned NOT NULL AUTO_INCREMENT,
   `team_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '队伍名',
   `open_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `contest_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`team_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `contest_id` int(32) DEFAULT NULL,
+  PRIMARY KEY (`team_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_team
 -- ----------------------------
-INSERT INTO `tb_team` VALUES ('00000000005', '发撒的发生发送到', 'oHKWv4q4hqTXS7F_UVPoVAyg3r5k', '5');
+INSERT INTO `tb_team` VALUES ('1', '发撒的发生发送到', 'oHKWv4q4hqTXS7F_UVPoVAyg3r5k', '5');
+INSERT INTO `tb_team` VALUES ('2', 'sdsfd', '2232', '5');
+INSERT INTO `tb_team` VALUES ('9', '1588768982166', '1588768982165', '5');
+INSERT INTO `tb_team` VALUES ('10', '1588769106259', '1588769106259', '5');
+INSERT INTO `tb_team` VALUES ('11', '1588769106271', '1588769106271', '5');
+INSERT INTO `tb_team` VALUES ('12', '1588769106277', '1588769106277', '5');
+INSERT INTO `tb_team` VALUES ('13', '1588769283507', '1588769283507', '5');
+INSERT INTO `tb_team` VALUES ('14', '1588769283533', '1588769283533', '5');
+INSERT INTO `tb_team` VALUES ('15', '1588769283541', '1588769283541', '5');
+INSERT INTO `tb_team` VALUES ('16', '1588769512636', '1588769512635', '5');
+INSERT INTO `tb_team` VALUES ('17', '1588769512657', '1588769512657', '5');
+INSERT INTO `tb_team` VALUES ('18', '1588769512666', '1588769512666', '5');
+INSERT INTO `tb_team` VALUES ('19', '1588770001645', '1588770001645', '5');
+INSERT INTO `tb_team` VALUES ('20', '1588770001667', '1588770001667', '5');
+INSERT INTO `tb_team` VALUES ('21', '1588770001676', '1588770001676', '5');
+INSERT INTO `tb_team` VALUES ('22', '1588771462374', '1588771462374', '5');
+INSERT INTO `tb_team` VALUES ('23', '1588771462400', '1588771462400', '5');
+INSERT INTO `tb_team` VALUES ('24', '1588771462410', '1588771462409', '5');
+INSERT INTO `tb_team` VALUES ('25', '1588771690862', '1588771690862', '5');
+INSERT INTO `tb_team` VALUES ('26', '1588771690888', '1588771690887', '5');
+INSERT INTO `tb_team` VALUES ('27', '1588771690895', '1588771690895', '5');
+INSERT INTO `tb_team` VALUES ('28', '1588771791247', '1588771791247', '5');
+INSERT INTO `tb_team` VALUES ('29', '1588771791260', '1588771791260', '5');
+INSERT INTO `tb_team` VALUES ('30', '1588771791265', '1588771791265', '5');
+INSERT INTO `tb_team` VALUES ('31', '1588773510353', '1588773510353', '5');
+INSERT INTO `tb_team` VALUES ('32', '1588773510363', '1588773510363', '5');
+INSERT INTO `tb_team` VALUES ('33', '1588773510367', '1588773510367', '5');
+INSERT INTO `tb_team` VALUES ('34', '1588773652345', '1588773652344', '5');
+INSERT INTO `tb_team` VALUES ('35', '1588773652353', '1588773652353', '5');
+INSERT INTO `tb_team` VALUES ('36', '1588773652358', '1588773652358', '5');
+INSERT INTO `tb_team` VALUES ('37', '1588774228037', '1588774228037', '5');
+INSERT INTO `tb_team` VALUES ('38', '1588774228047', '1588774228047', '5');
+INSERT INTO `tb_team` VALUES ('39', '1588774228055', '1588774228055', '5');
+INSERT INTO `tb_team` VALUES ('40', '1588774583344', '1588774583344', '1');
+INSERT INTO `tb_team` VALUES ('41', '1588775620957', '1588775620957', '5');
+INSERT INTO `tb_team` VALUES ('42', '1588775620971', '1588775620971', '5');
+INSERT INTO `tb_team` VALUES ('43', '1588775620980', '1588775620980', '5');
+INSERT INTO `tb_team` VALUES ('44', '1588776429678', '1588776429678', '5');
+INSERT INTO `tb_team` VALUES ('45', '1588776429693', '1588776429693', '5');
+INSERT INTO `tb_team` VALUES ('46', '1588776429698', '1588776429698', '5');
+INSERT INTO `tb_team` VALUES ('47', '1588776689767', '1588776689767', '5');
+INSERT INTO `tb_team` VALUES ('48', '1588776689787', '1588776689786', '5');
+INSERT INTO `tb_team` VALUES ('49', '1588776689795', '1588776689795', '5');
 
 -- ----------------------------
 -- Table structure for tb_team_members
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_team_members`;
 CREATE TABLE `tb_team_members` (
-  `member_id` int(11) NOT NULL AUTO_INCREMENT,
-  `contest_id` int(11) DEFAULT NULL,
-  `team_id` int(11) DEFAULT NULL,
+  `member_id` int(32) NOT NULL AUTO_INCREMENT,
+  `contest_id` int(32) DEFAULT NULL,
+  `team_id` int(32) DEFAULT NULL,
   `open_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `member_name` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `member_phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -134,23 +176,150 @@ CREATE TABLE `tb_team_members` (
   `apply_result` tinyint(2) DEFAULT NULL COMMENT '报名结果',
   `insert_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`member_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_team_members
 -- ----------------------------
-INSERT INTO `tb_team_members` VALUES ('27', '5', '1', 'oHKWv4q4hqTXS7F_UVPoVAyg3r5k', '范德萨发的是', '范德萨发啊发', '阿凡达撒', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
-INSERT INTO `tb_team_members` VALUES ('28', '5', '1', '', '范德萨发啊发', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
-INSERT INTO `tb_team_members` VALUES ('29', '5', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
-INSERT INTO `tb_team_members` VALUES ('30', '5', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
-INSERT INTO `tb_team_members` VALUES ('31', '5', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
-INSERT INTO `tb_team_members` VALUES ('32', '1', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, null, null);
-INSERT INTO `tb_team_members` VALUES ('33', '1', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, null, null);
-INSERT INTO `tb_team_members` VALUES ('34', '1', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, null, null);
-INSERT INTO `tb_team_members` VALUES ('35', '1', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, null, null);
-INSERT INTO `tb_team_members` VALUES ('36', '1', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', '钻石', 'xxx', '0', null, null, null);
-INSERT INTO `tb_team_members` VALUES ('37', '1', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members` VALUES ('27', '1', '1', 'oHKWv4q4hqTXS7F_UVPoVAyg3r5k', '范德萨发的是', '范德萨发啊发', '阿凡达撒', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:04', '2020-05-06 22:16:04');
+INSERT INTO `tb_team_members` VALUES ('28', '1', '1', '', '范德萨发啊发', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:05', '2020-05-06 22:16:05');
+INSERT INTO `tb_team_members` VALUES ('29', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:06', '2020-05-06 22:16:06');
+INSERT INTO `tb_team_members` VALUES ('30', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:08', '2020-05-06 22:16:08');
+INSERT INTO `tb_team_members` VALUES ('31', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:09', '2020-05-06 22:16:09');
+INSERT INTO `tb_team_members` VALUES ('32', '1', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, '2020-05-06 22:16:11', '2020-05-06 22:16:11');
+INSERT INTO `tb_team_members` VALUES ('33', '1', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, '2020-05-06 22:16:12', '2020-05-06 22:16:12');
+INSERT INTO `tb_team_members` VALUES ('34', '1', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, '2020-05-06 22:16:14', '2020-05-06 22:16:14');
+
+-- ----------------------------
+-- Table structure for tb_team_members_copy
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_team_members_copy`;
+CREATE TABLE `tb_team_members_copy` (
+  `member_id` int(32) NOT NULL AUTO_INCREMENT,
+  `contest_id` int(32) DEFAULT NULL,
+  `team_id` int(32) DEFAULT NULL,
+  `open_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `member_name` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `member_phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contest_area` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所在大区',
+  `member_player_id` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '游戏id',
+  `member_player_level` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '游戏段位',
+  `contest_other_info` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_team` tinyint(2) DEFAULT NULL,
+  `apply_result` tinyint(2) DEFAULT NULL COMMENT '报名结果',
+  `insert_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`member_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_team_members_copy
+-- ----------------------------
+INSERT INTO `tb_team_members_copy` VALUES ('27', '1', '1', 'oHKWv4q4hqTXS7F_UVPoVAyg3r5k', '范德萨发的是', '范德萨发啊发', '阿凡达撒', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:04', '2020-05-06 22:16:04');
+INSERT INTO `tb_team_members_copy` VALUES ('28', '1', '1', '', '范德萨发啊发', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:05', '2020-05-06 22:16:05');
+INSERT INTO `tb_team_members_copy` VALUES ('29', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:06', '2020-05-06 22:16:06');
+INSERT INTO `tb_team_members_copy` VALUES ('30', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:08', '2020-05-06 22:16:08');
+INSERT INTO `tb_team_members_copy` VALUES ('31', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:09', '2020-05-06 22:16:09');
+INSERT INTO `tb_team_members_copy` VALUES ('32', '1', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, '2020-05-06 22:16:11', '2020-05-06 22:16:11');
+INSERT INTO `tb_team_members_copy` VALUES ('33', '1', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, '2020-05-06 22:16:12', '2020-05-06 22:16:12');
+INSERT INTO `tb_team_members_copy` VALUES ('34', '1', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, '2020-05-06 22:16:14', '2020-05-06 22:16:14');
+INSERT INTO `tb_team_members_copy` VALUES ('35', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, '2020-05-06 16:33:35', '2020-05-06 16:33:35');
+INSERT INTO `tb_team_members_copy` VALUES ('36', '5', null, 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', '钻石', 'xxx', '0', null, '2020-05-06 16:34:07', '2020-05-06 16:34:07');
+INSERT INTO `tb_team_members_copy` VALUES ('37', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('38', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('39', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('40', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('41', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('42', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('43', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('44', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+INSERT INTO `tb_team_members_copy` VALUES ('45', '5', null, 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 16:34:09', '2020-05-06 16:34:09');
+
+-- ----------------------------
+-- Table structure for tb_team_members_result
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_team_members_result`;
+CREATE TABLE `tb_team_members_result` (
+  `member_id` int(32) DEFAULT NULL,
+  `contest_id` int(32) DEFAULT NULL,
+  `team_id` int(32) DEFAULT NULL,
+  `open_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `member_name` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `member_phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contest_area` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所在大区',
+  `member_player_id` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '游戏id',
+  `member_player_level` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '游戏段位',
+  `contest_other_info` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_team` tinyint(2) DEFAULT NULL,
+  `apply_result` tinyint(2) DEFAULT NULL COMMENT '报名结果',
+  `insert_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of tb_team_members_result
+-- ----------------------------
+INSERT INTO `tb_team_members_result` VALUES ('30', '5', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:16:00', '2020-05-06 22:16:00');
+INSERT INTO `tb_team_members_result` VALUES ('29', '5', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:15:58', '2020-05-06 22:15:58');
+INSERT INTO `tb_team_members_result` VALUES ('28', '5', '1', '', '范德萨发啊发', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:15:57', '2020-05-06 22:15:57');
+INSERT INTO `tb_team_members_result` VALUES ('31', '5', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:15:56', '2020-05-06 22:15:56');
+INSERT INTO `tb_team_members_result` VALUES ('27', '5', '1', 'oHKWv4q4hqTXS7F_UVPoVAyg3r5k', '范德萨发的是', '范德萨发啊发', '阿凡达撒', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', '2020-05-06 22:15:55', '2020-05-06 22:15:55');
+INSERT INTO `tb_team_members_result` VALUES ('33', '5', '37', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, '2020-05-06 22:15:53', '2020-05-06 22:15:53');
+INSERT INTO `tb_team_members_result` VALUES ('41', '5', '37', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, '2020-05-06 22:15:52', '2020-05-06 22:15:52');
+INSERT INTO `tb_team_members_result` VALUES ('36', '5', '37', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', '钻石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('42', '5', '37', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('38', '5', '37', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('37', '5', '38', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('35', '5', '38', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('40', '5', '38', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('45', '5', '38', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('34', '5', '38', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('44', '5', '39', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('32', '5', '39', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('43', '5', '39', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('39', '5', '39', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('28', '1', '1', '', '范德萨发啊发', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
+INSERT INTO `tb_team_members_result` VALUES ('31', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
+INSERT INTO `tb_team_members_result` VALUES ('29', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
+INSERT INTO `tb_team_members_result` VALUES ('30', '1', '1', '', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
+INSERT INTO `tb_team_members_result` VALUES ('27', '1', '1', 'oHKWv4q4hqTXS7F_UVPoVAyg3r5k', '范德萨发的是', '范德萨发啊发', '阿凡达撒', '范德萨发啊发', '范德萨发啊发', '范德萨发啊发', '1', '1', null, null);
+INSERT INTO `tb_team_members_result` VALUES ('33', '1', '40', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('32', '1', '40', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('34', '1', '40', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('40', '5', '41', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('38', '5', '41', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('43', '5', '41', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('45', '5', '41', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('44', '5', '41', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('36', '5', '42', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', '钻石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('35', '5', '42', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('41', '5', '42', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('37', '5', '42', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('42', '5', '42', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('39', '5', '43', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('41', '5', '44', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('37', '5', '44', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('40', '5', '44', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('43', '5', '44', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('38', '5', '44', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('35', '5', '45', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('42', '5', '45', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('36', '5', '45', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', '钻石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('45', '5', '45', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('44', '5', '45', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('39', '5', '46', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('38', '5', '47', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('43', '5', '47', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('36', '5', '47', 'xxxxxxx', '232424324', 'memberPhone', '西班牙', '小胡子', '钻石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('44', '5', '47', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('41', '5', '47', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('42', '5', '48', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('45', '5', '48', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('40', '5', '48', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('35', '5', '48', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', null, 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('37', '5', '48', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
+INSERT INTO `tb_team_members_result` VALUES ('39', '5', '49', 'xxxx22332xxx', '23243324324', 'memb232232erPhone', '西班2323牙', '小23胡子', '钻2石', 'xxx', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for tb_wxuser
@@ -166,8 +335,8 @@ CREATE TABLE `tb_wxuser` (
   `province` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `insert_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_wxuser
