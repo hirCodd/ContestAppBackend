@@ -12,24 +12,69 @@ import java.util.Set;
 @Mapper
 @Component
 public interface ContestDao {
+    /**
+     * 发布比赛
+     * @param contest
+     * @return
+     */
     Boolean insertContest(Contest contest);
 
+    /**
+     * 更新比赛
+     * @param contest
+     * @return
+     */
     Boolean updateContest(Contest contest);
 
+    /**
+     * 获取全部比赛
+     * @return
+     */
     List<Contest> getAllContests();
 
+    /**
+     * 获取比赛详情
+     * @param contestId
+     * @return
+     */
     Contest getContestContent(Integer contestId);
 
+    /**
+     * 插入报名人员
+     * @param contestMemberList
+     * @return
+     */
     Boolean insertContestMembers(List<ContestMember> contestMemberList);
 
     Boolean queryApplyResultByContestIdAndOpenId(Integer contestId, String openId);
 
+    /**
+     * 查询比赛队伍信息
+     * @param contestId
+     * @param openId
+     * @return
+     */
     Integer queryTeamInfoResult(Integer contestId, String openId);
 
+    /**
+     * 查询比赛队伍名
+     * @param contestId
+     * @return
+     */
     List<String> queryTeamNames(Integer contestId);
 
+    /**
+     * 插入比赛队伍
+     * @param teamInfo
+     * @return
+     */
     Integer insertTeamInfo(TeamInfo teamInfo);
 
+    /**
+     * 查询比赛报名结果
+     * @param openId
+     * @return
+     */
     List<Contest> queryMyContestApply(String openId);
 
     /**

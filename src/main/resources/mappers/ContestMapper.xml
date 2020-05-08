@@ -166,5 +166,6 @@
         select *
         from tb_team_members_result
         where contest_id = #{contestId, jdbcType=INTEGER}
+        order by 'team_id' ASC
     </select>
 </mapper>

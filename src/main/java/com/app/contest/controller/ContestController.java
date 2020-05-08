@@ -75,17 +75,31 @@ public class ContestController {
         return update ? ResultUtils.success() : ResultUtils.error();
     }
 
+    /**
+     * 获取比赛
+     */
     @RequestMapping(value = "/getContest", method = { RequestMethod.GET })
     public ResultUtils getPaginationContest(@RequestParam(defaultValue = "1") Integer pageNum,
                                             @RequestParam(defaultValue = "10") Integer pageSize) {
         return ResultUtils.success(contestService.getPaginationContest(pageNum, pageSize));
     }
 
+    /**
+     * 通过比赛id获取比赛详情
+     * @param contestId
+     * @return
+     */
     @RequestMapping(value = "/getContestDetail", method = { RequestMethod.GET })
     public ResultUtils getContestDetail(@RequestParam Integer contestId) {
         return ResultUtils.success(contestService.getContestById(contestId));
     }
 
+    /**
+     * 查询报名结果
+     * @param contestId
+     * @param openId
+     * @return
+     */
     @RequestMapping(value = "/queryResult", method = { RequestMethod.GET } )
     public ResultUtils queryApplyResult(@RequestParam @NotNull Integer contestId,
                                         @RequestParam @NotNull String openId) {
@@ -186,6 +200,11 @@ public class ContestController {
         return ResultUtils.success(list);
     }
 
+    /**
+     * 上传比赛图片
+     * @param file
+     * @return
+     */
     @RequestMapping(value = "/upload", method = { RequestMethod.POST })
     public ResultUtils fileUpload(MultipartFile file) {
         if (file.isEmpty()) {
@@ -205,6 +224,11 @@ public class ContestController {
         return !newName.isEmpty() ? ResultUtils.success(url) : ResultUtils.error();
     }
 
+    /**
+     * 删除比赛图片
+     * @param delFileDTO
+     * @return
+     */
     @RequestMapping(value = "/deleteImg", method = { RequestMethod.POST })
     public ResultUtils deleteFile(@RequestBody DelFileDTO delFileDTO) {
         int lastIndex = delFileDTO.getFileUrl().lastIndexOf("/");

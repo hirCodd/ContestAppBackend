@@ -25,6 +25,12 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
+    /**
+     * 管理员登录接口
+     * @param loginName
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
     public ResultUtils login(@RequestParam @NotNull String loginName, @RequestParam @NotNull String password) {
         Admin admin = adminService.login(loginName);

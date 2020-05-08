@@ -24,17 +24,32 @@ public class WxUserController {
     @Autowired
     WxUserService wxUserService;
 
+    /**
+     * 小程序登录接口
+     * @param code
+     * @return
+     */
     @RequestMapping("/onLogin")
     public ResultUtils getUserInfo(@NotNull @RequestParam String code) {
 
         return ResultUtils.success(wxUserService.getUserInfo(code));
     }
 
+    /**
+     * 小程序核验接口
+     * @param verifyUserDTO
+     * @return
+     */
     @RequestMapping("/verify")
     public ResultUtils verifyUser(@RequestBody VerifyUserDTO verifyUserDTO) {
        return ResultUtils.success(wxUserService.queryUserOpenId(verifyUserDTO.getOpenId()));
     }
 
+    /**
+     * 小程序注册接口
+     * @param wxUserDTO
+     * @return
+     */
     @RequestMapping("/register")
     public ResultUtils registerUser(@RequestBody WxUserDTO wxUserDTO){
         WxUser wxUser = new WxUser();
